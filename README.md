@@ -4,22 +4,22 @@ This repository contains code to reproduce the benchmarks calculated for the dat
 
 ## Installation and usage
 
-[Optional] Before installing the code, you can create a virtual environment so
-the installed packages don't get mixed with the ones in your system. To do it,
-execute the following commands in your terminal:
+Getting Started
 
-    python3 -m venv trvrecsys2019benchmarks
-    source trvrecsys2019benchmarks/bin/activate
+- Make sure you have installed the NVIDIA driver installed on the host system
+- [Docker](https://docs.docker.com/get-docker/)
 
-This will create a folder in the current directory which will contain the Python executable files.
+## Spawning and running the container
 
-To install the package and its dependencies use:
+```
+docker compose up -d 
+```
 
-    pip install git+https://github.com/trivago/recsys-challenge-2019-benchmarks.git#egg=trvrecsys2019benchmarks
+## Usage
 
-This will install all Python packages that are needed. Note that in order to run the code on a Mac, the used version of the lightgbm library requires the installation of the OpenMP library, which is required for running LightGBM on the system with the Apple Clang compiler. This can be installed via:
-
-    brew install libomp
+```
+docker compose exec python /bin/bash
+```
 
 
 ### Producing example data
@@ -32,6 +32,10 @@ To run an individual model, run:
 
     run-single-model --data-path <path-to-csv-files-directory> --train-file <training-data-file> --test-file <test-data-file> --subm-file <submission-file-to-be-created> --model-name <name-of-model>
 
+E.g.:
+
+    run-single-model --data-path data --train-file train_example.csv --test-file test_example.csv --subm-file subm_example.csv --model-name random
+
 To see what models are available, run:
 
     run-single-model --help
@@ -42,3 +46,8 @@ Note, that some models need a different set of training data. For example, the n
 You can run all models at once. This might take a while and the name of the submission files will be inferred from the model names. To do so, run:
 
     run-all-models --data-path <path-to-csv-files-directory> --train-file <training-data-file> --test-file <test-data-file> --meta-file <item-metadata-file>
+
+E.g.:
+
+    run-all-models --data-path data --train-file train_example.csv --test-file test_example.csv --meta-file item_metadata_example.csv 
+
